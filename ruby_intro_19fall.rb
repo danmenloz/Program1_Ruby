@@ -1,5 +1,5 @@
 
-  # Part 1
+# Part 1
 
   def two_sum(a,k)
     # Dylan Spruill
