@@ -31,7 +31,10 @@ require 'date'
     #Create an array of repeated elements only
     rep_array = a.select{ |elem| a.count(elem)>1 }
     #Delete all repeated elements in input array 'a' and get the sum of the remaining elements
-    a.difference(rep_array).sum
+    #a.difference(rep_array).sum #difference doesn't exist in ruby 2.5
+    rep_array.uniq! #unique array of repeated characters
+    a.delete_if{ |elem| rep_array.include?(elem) }
+    return a.sum
   end
 
 # Part 2
