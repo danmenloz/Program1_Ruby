@@ -68,13 +68,10 @@ require 'date'
 # Part 3
 
   class Movie
-    attr_accessor :name, :release_date
+    attr_writer :name, :release_date
 
     def initialize(name, release_date)
       # Dylan Spruill
-      @name = name
-      @release_date = release_date
-
       # Check to see if name is nil or empty
       if name.nil? || name.empty?
         raise ArgumentError.new("A name value must be provided as the first arg")
@@ -84,6 +81,25 @@ require 'date'
       if release_date.empty? || !release_date.match(/\d{2}-\d{2}-\d{4}/)
         raise ArgumentError.new("A release date in the form of MM-DD-YYYY must be provided as the second arg")
       end
+      # Initialize
+      @name = name
+      @date = release_date
+    end
+
+    def name # Setter Method
+      if name.nil? || name.empty?
+        raise ArgumentError.new("A name value must be provided")
+      else
+        @name
+      end
+    end
+
+    def release_date # Setter Method
+      if @date.empty? || !@date.match(/\d{2}-\d{2}-\d{4}/)
+        raise ArgumentError.new("A release date in the form of MM-DD-YYYY must be provided")
+      else
+        @date
+      end
     end
 
     def method_missing(method, *args, &block)
@@ -92,7 +108,7 @@ require 'date'
       puts "#{method} hasn't been implemented"
     end
 
-    def is_date_valid?(date)
+    def self.is_date_valid?(date)
       # Dylan Spruill
       # valid_format checks to see if date format is correct
       # valid_date checks to see if the date is a real date
@@ -110,9 +126,9 @@ require 'date'
       # Dylan Spruill
       # TODO: Fix this method :(
       # Checks to see if release_date is valid
-      if is_date_valid?(release_date)
+      if self.is_date_valid? @date
         # Returns name concatenated with formatted release date
-        name + " - " + release_date.strftime('%B %d %Y')
+        @name + " - " + @date.strftime('%B %d %Y')
       else
         raise ArgumentError.new("Invalid Date")
       end
