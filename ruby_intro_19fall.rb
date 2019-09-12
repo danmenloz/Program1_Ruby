@@ -71,26 +71,10 @@ require 'date'
     attr_reader :name, :release_date #default getter methods
 
     def initialize(name, release_date)
-      # Dylan Spruill
-      #
-=begin #DRY, use setter methods instead
-      # Check to see if name is nil or empty
-      if name.nil? || name.empty?
-        raise ArgumentError.new("A name value must be provided as the first arg")
-      end
-
-      # Check to see if release_date is empty
-      if release_date.empty? || !release_date.match(/\d{2}-\d{2}-\d{4}/)
-        raise ArgumentError.new("A release date in the form of MM-DD-YYYY must be provided as the second arg")
-      end
-
-      # Initialize
-      @name = name
-      @date = release_date
-=end
+      # Daniel Mendez
+      # Use setter methods to initialize object
       self.name = name
       self.release_date = release_date
-
     end
 
     def name=(name) # Setter Method
@@ -112,24 +96,13 @@ require 'date'
 
 
     def self.is_date_valid?(date)
-      # Dylan Spruill
-      # valid_format checks to see if date format is correct
-      # valid_date checks to see if the date is a real date
-      #valid_format = date.match(/\d{2}-\d{2}-\d{4}/)
-      #cal_date = Date.strptime(date, '%m-%d-%Y') #crete Date object
+      #Danie Mendez
+      #Convert date to integer and check validity with Date method 'valid_date?'
       month = date[0..2].to_i
       day = date[3..4].to_i
       year = date[6..9].to_i
       Date.valid_date?(year,month,day)
 
-=begin
-      # Returns true is valid_format and valid_date are cleared
-      if valid_format && valid_date
-        true
-      else
-        false
-      end
-=end
     end
 
     def method_missing(method, *args, &block)
@@ -140,19 +113,18 @@ require 'date'
 
     def released_on
       # Dylan Spruill
-      # TODO: Fix this method :(
       # Checks to see if release_date is valid
-      if self.is_date_valid? @release_date
+      if Movie.is_date_valid?(@release_date)
         # Returns name concatenated with formatted release date
-        @release_date + " - " + @release_date.strftime('%B %d %Y')
+        @name + " - " + Date.strptime(@release_date, '%m-%d-%Y').strftime('%B %d %Y')
       else
-        raise ArgumentError.new("Invalid Date")
+        return "Invalid Date"
       end
     end
 
     def is_released?
       # Daniel Mendez
-      # TODO
+      # Compare release_date with today's date
       if Movie.is_date_valid?(@release_date)
          if (Date.today <=> Date.strptime(@release_date, '%m-%d-%Y'))>=0 #strptime returns 1 if today>release_date, 0 if equal
            return "true"
