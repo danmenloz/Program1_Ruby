@@ -62,7 +62,6 @@
     end
 
     #Q6
-=begin
     begin
       m1 = Movie.new("Avengers", "02-29-2019")
     rescue
@@ -74,6 +73,30 @@
       m2 = Movie.new("Avengers", "01-18-2019")
     rescue
       m2 = nil
+    end
+
+    begin
+      m3 = Movie.new("Out Now!", "09-10-2018")
+    rescue
+      m3 = nil
+    end
+
+    begin
+      m4 = Movie.new("Old Movie", "01-01-1970")
+    rescue
+      m4 = nil
+    end
+
+    begin
+      m5 = Movie.new("Future Movie", "04-15-2020")
+    rescue
+      m5 = nil
+    end
+
+    begin
+      m6 = Movie.new("Leap Year", "02-29-2020")
+    rescue
+      m6 = nil
     end
 
     begin
@@ -93,7 +116,38 @@
     rescue
       wrong+=1
     end
-=end
+
+    begin
+      m3.release_date "09-12-2019"
+      m3.is_released? == "true" ? correct+=1 : wrong+=1
+    rescue
+      wrong+=1
+    end
+
+    begin
+      m4.released_on == "Old Movie - January 1 1970" ? correct+=1 : wrong+=1
+    rescue
+      wrong+=1
+    end
+
+    begin
+      m5.is_released? == 'false' ? correct+1 : wrong+=1
+    rescue
+      wrong+=1
+    end
+
+    begin
+      m5.released_on == "Future Movie - April 15 2020" ? correct+=1 : wrong+=1
+    rescue
+      wrong+=1
+    end
+
+    begin
+      m6.released_on == "Leap Year - February 29 2020" ? correct+=1 : wrong+=1
+    rescue
+      wrong+=1
+    end
+
     # puts correct+wrong
     puts correct, wrong, correct+wrong
     return ( (correct * full).to_f / (wrong + correct) ).round(2)
