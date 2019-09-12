@@ -12,6 +12,8 @@
       two_sum([10,20,30], 15) == -1 ? correct+=1 : wrong+=1
       two_sum([-2,-1,0,1,2,3], 1) == 0 ? correct+=1 : wrong+=1 #mix neg and pos numbers
       two_sum([-15,-20,-5,-10], -20) == -25 ? correct+=1 : wrong+=1 #neg numbers only
+      two_sum([0,0,-1], -50) == -1 ? correct+=1 : wrong+=1
+      two_sum([0,0,-1], -1) == -1? correct+1 : wrong+=1
     rescue
       wrong+=1
     end
@@ -118,14 +120,14 @@
     end
 
     begin
-      m3.release_date "09-12-2019"
+      m3.release_date = "09-12-2019"
       m3.is_released? == "true" ? correct+=1 : wrong+=1
     rescue
       wrong+=1
     end
 
     begin
-      m4.released_on == "Old Movie - January 1 1970" ? correct+=1 : wrong+=1
+      m4.released_on == "Old Movie - January 01 1970" ? correct+=1 : wrong+=1
     rescue
       wrong+=1
     end
