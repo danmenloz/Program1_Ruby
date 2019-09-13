@@ -130,6 +130,12 @@
     end
 
     begin
+      m7 = Movie.new("\t@fter    ", "12-31-2019") #Special char in name and last day of the year
+    rescue
+      m7 = nil
+    end
+
+    begin
       m1.released_on == "Invalid Date" ? correct+=1 : wrong+=1
     rescue
       wrong+=1
@@ -176,6 +182,60 @@
       m6.released_on == "Leap Year - February 29 2020" ? correct+=1 : wrong+=1
     rescue
       wrong+=1
+    end
+
+    begin
+      m7.released_on == "\t@fter     - December 31 2019" ? correct+=1 : wrong+=1
+    rescue
+      wrong+=1
+    end
+
+    begin
+      m7.is_released? == "false" ? correct+=1 : wrong+=1
+    rescue
+      wrong+=1
+    end
+
+    #test getters and setters
+    begin
+      m7.name = "Some Movie"
+      m7.release_date = "09-13-2019"
+      m7.name == "Some Movie" ? correct+=1 : wrong+=1
+      m7.release_date == "09-13-2019" ? correct+=1 : wrong+=1
+    rescue
+      wrong+=1
+    end
+
+    #test empty value
+    begin
+      m7.name = ""
+      wrong+=1 #code shouldn't reach here
+    rescue
+      correct+=1 #ArgumentError rised
+    end
+
+    #test nil value
+    begin
+      m7.name = nil
+      wrong+=1 #code shouldn't reach here
+    rescue
+      correct+=1 #ArgumentError rised
+    end
+
+    #test wrong format
+    begin
+      m7.release_date = "009-13-2019"
+      wrong+=1 #code shouldn't reach here
+    rescue
+      correct+=1 #ArgumentError rised
+    end
+
+    #test nil value
+    begin
+      m7.release_date = nil
+      wrong+=1 #code shouldn't reach here
+    rescue
+      correct+=1 #ArgumentError rised
     end
 
     # puts correct+wrong
